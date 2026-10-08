@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loan Desk | A clean enquiry register, follow-up board and morning rate digest</title>
+  <meta name="description" content="Loan Desk builds a clean enquiry register, a follow-up board and a morning rate digest for small telecalling teams and independent DSA desks. Rs 25,000 setup + Rs 4,000 a month.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#0F6B6C;
+      --secondary:#D9C7A9;
+      --contrast:#14202B;
+      --light:#F7F3EC;
+      --dark:#14202B;
+      --white:#FFFFFF;
+      --black:#000000;
+
+      --h1: clamp(40px, 14px + 4vw, 80px);
+      --h2: clamp(32px, 16px + 2.2vw, 52px);
+      --figure: clamp(64px, 24px + 5.5vw, 100px);
+      --h3: clamp(22px, 16px + 1vw, 28px);
+      --lead: clamp(18px, 15px + 0.7vw, 22px);
+      --body: 18px;
+      --label: 14px;
+      --btn: 18px;
+
+      --display:'Sora', 'Segoe UI', sans-serif;
+      --text:'DM Sans', 'Segoe UI', sans-serif;
+
+      --radius:16px;
+      --maxw:1200px;
+      --pad:96px;
+    }
+
+    *,*::before,*::after{ box-sizing:border-box; }
+
+    html{ scroll-behavior:smooth; }
+
+    body{
+      margin:0;
+      font-family:var(--text);
+      font-size:var(--body);
+      line-height:1.6;
+      color:var(--dark);
+      background:var(--light);
+      padding-bottom:0;
+    }
+
+    img{ display:block; max-width:100%; height:auto; }
+
+    a{ color:inherit; }
+
+    h1,h2,h3{ font-family:var(--display); margin:0; }
+
+    .wrap{ width:100%; max-width:var(--maxw); margin:0 auto; padding-left:20px; padding-right:20px; }
+
+    section{ padding-top:var(--pad); padding-bottom:var(--pad); }
+
+    /* ---------- Header ---------- */
+    .site-header{
+      position:sticky; top:0; z-index:50;
+      background:var(--white);
+      border-bottom:1px solid var(--secondary);
+    }
+    .site-header .wrap{
+      display:flex; align-items:center; gap:12px;
+      padding-top:10px; padding-bottom:10px;
+      min-height:64px;
+    }
+    .site-header img{ width:40px; height:40px; border-radius:var(--radius); }
+    .brand-name{
+      font-family:var(--display); font-weight:800;
+      font-size:20px; letter-spacing:-0.01em; color:var(--dark);
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      min-height:56px; padding:0 28px;
+      font-family:var(--text); font-size:var(--btn); font-weight:700; line-height:1;
+      text-decoration:none; border-radius:var(--radius);
+      border:2px solid transparent; cursor:pointer;
+    }
+    .btn:active{ transform:translateY(1px); }
+    .btn svg{ width:24px; height:24px; flex:0 0 auto; }
+    .btn-solid{ background:var(--primary); color:var(--white); }
+    .btn-on-primary{ background:var(--white); color:var(--primary); }
+    .btn-ghost-light{ background:transparent; color:var(--white); border-color:var(--white); }
+    .btn-ghost-dark{ background:transparent; color:var(--dark); border-color:var(--dark); }
+
+    a:focus-visible, .btn:focus-visible, summary:focus-visible{
+      outline:3px solid var(--secondary); outline-offset:3px; border-radius:6px;
+    }
+
+    .label{
+      font-family:var(--text); font-size:var(--label); font-weight:600;
+      letter-spacing:0.04em; text-transform:uppercase; line-height:1.4;
+    }
+
+    /* ---------- 1. Hero ---------- */
+    .s-hero{ background:var(--primary); color:var(--white); position:relative; padding-top:0; }
+    .hero-media{
+      position:absolute; top:0; right:0; height:100%; width:45%;
+    }
+    .hero-media img{ width:100%; height:100%; object-fit:cover; }
+    .hero-inner{
+      position:relative; z-index:2;
+      max-width:var(--maxw); margin:0 auto;
+      padding:72px 20px var(--pad);
+    }
+    .hero-text{ max-width:55%; }
+    .hero-text .label{ color:var(--light); }
+    h1{
+      font-size:var(--h1); font-weight:800; line-height:1.05;
+      letter-spacing:-0.02em; margin:18px 0 22px;
+    }
+    h1 .accent{ color:var(--secondary); }
+    .hero-lead{
+      font-size:var(--lead); font-weight:500; line-height:1.45;
+      max-width:34ch; margin:0 0 32px; color:var(--light);
+    }
+    .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; }
+
+    /* ---------- 2. Proof ---------- */
+    .s-proof{ background:var(--dark); color:var(--light); }
+    .who{
+      display:flex; align-items:flex-start; gap:20px;
+      max-width:62ch; margin-bottom:64px;
+    }
+    .who img{
+      width:96px; height:96px; border-radius:50%; object-fit:cover;
+      border:3px solid var(--secondary); flex:0 0 auto;
+    }
+    .who h2{ font-size:var(--h3); font-weight:700; line-height:1.2; color:var(--white); margin-bottom:8px; }
+    .who p{ margin:0; color:var(--light); }
+    .figures{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+    .figure-num{
+      font-family:var(--display); font-weight:800; font-size:var(--figure); line-height:1;
+      letter-spacing:-0.02em; color:var(--white);
+    }
+    .figure-label{ display:block; margin-top:14px; color:var(--secondary); }
+
+    /* ---------- 3. What you get ---------- */
+    .s-light{ background:var(--light); color:var(--dark); }
+    .sect-head{ max-width:60ch; margin-bottom:56px; }
+    h2{ font-size:var(--h2); font-weight:800; line-height:1.1; letter-spacing:-0.02em; }
+    .sect-lead{ font-size:var(--lead); font-weight:500; line-height:1.45; margin:16px 0 0; }
+    .offer-grid{
+      display:grid; grid-template-columns:1.05fr 1fr; grid-template-rows:1fr 1fr; gap:24px;
+    }
+    .tile{
+      background:var(--white); border:1px solid var(--secondary);
+      border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column;
+    }
+    .tile.tall{ grid-row:1 / span 2; }
+    .tile img{ width:100%; object-fit:cover; }
+    .tile.tall img{ height:58%; aspect-ratio:1 / 1; }
+    .tile.small img{ height:150px; }
+    .tile-body{ padding:26px 26px 30px; display:flex; flex-direction:column; gap:10px; }
+    .tile-icon{ color:var(--primary); }
+    .tile-icon svg{ width:24px; height:24px; }
+    .tile-body h3{ font-size:var(--h3); font-weight:700; line-height:1.2; }
+    .tile-body p{ margin:0; }
+
+    /* ---------- 4. How it works ---------- */
+    .s-secondary{ background:var(--secondary); color:var(--dark); }
+    .how-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; }
+    .steps{ display:flex; flex-direction:column; gap:40px; }
+    .step{ display:flex; gap:24px; align-items:flex-start; }
+    .step-num{
+      font-family:var(--display); font-weight:800; font-size:64px; line-height:1;
+      color:var(--primary); flex:0 0 auto; min-width:96px;
+    }
+    .step h3{ font-size:var(--h3); font-weight:700; line-height:1.2; margin-bottom:8px; }
+    .step p{ margin:0; max-width:46ch; }
+    .how-media img{ width:100%; border-radius:var(--radius); aspect-ratio:4 / 5; object-fit:cover; }
+
+    /* ---------- 5. Price ---------- */
+    .s-contrast{ background:var(--contrast); color:var(--light); }
+    .price{ 
+      font-family:var(--display); font-weight:800; line-height:1.1; letter-spacing:-0.02em;
+      font-size:clamp(34px, 18px + 3.4vw, 56px); color:var(--white); margin:0 0 28px;
+    }
+    .price span{ color:var(--secondary); }
+    .included{ margin:0 0 40px; padding:0; list-style:none; display:flex; flex-direction:column; gap:14px; max-width:64ch; }
+    .included li{ padding-left:30px; position:relative; }
+    .included li::before{
+      content:""; position:absolute; left:0; top:9px; width:14px; height:8px;
+      border-left:3px solid var(--secondary); border-bottom:3px solid var(--secondary); transform:rotate(-45deg);
+    }
+    .faq{ display:flex; flex-direction:column; gap:12px; max-width:70ch; }
+    .faq details{
+      background:rgba(247,243,236,0.06); border:1px solid rgba(217,199,169,0.35);
+      border-radius:var(--radius); padding:0 22px;
+    }
+    .faq summary{
+      cursor:pointer; list-style:none; min-height:56px; display:flex; align-items:center;
+      font-family:var(--display); font-weight:700; font-size:18px; color:var(--white);
+      padding:16px 0;
+    }
+    .faq summary::-webkit-details-marker{ display:none; }
+    .faq summary::after{ content:"+"; margin-left:auto; color:var(--secondary); font-size:24px; line-height:1; }
+    .faq details[open] summary::after{ content:"-"; }
+    .faq details p{ margin:0 0 20px; }
+
+    /* ---------- 6. Start ---------- */
+    .s-start{ background:var(--primary); color:var(--white); }
+    .start-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; }
+    .start-line{
+      font-family:var(--display); font-weight:800; line-height:1.1; letter-spacing:-0.01em;
+      font-size:clamp(30px, 18px + 2.6vw, 44px); margin:0 0 32px; color:var(--white);
+    }
+    .contact-actions{ display:flex; flex-direction:column; gap:14px; align-items:flex-start; }
+    .contact-actions .btn{ width:100%; max-width:420px; }
+    .start-media img{ width:100%; border-radius:var(--radius); aspect-ratio:5 / 4; object-fit:cover; }
+
+    /* ---------- 7. Footer ---------- */
+    .s-footer{ background:var(--dark); color:var(--light); padding-top:64px; padding-bottom:56px; }
+    .footer-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:start; }
+    .footer-brand{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+    .footer-brand img{ width:44px; height:44px; border-radius:var(--radius); }
+    .footer-brand strong{ font-family:var(--display); font-size:24px; font-weight:800; color:var(--white); }
+    .footer-links{ display:flex; flex-direction:column; gap:10px; }
+    .footer-links a{
+      min-height:44px; display:inline-flex; align-items:center; gap:10px;
+      color:var(--light); text-decoration:none; font-weight:600;
+    }
+    .footer-links a:hover{ color:var(--secondary); }
+    .footer-links svg{ width:24px; height:24px; color:var(--secondary); flex:0 0 auto; }
+    .credit{ margin-top:28px; color:var(--secondary); }
+
+    /* ---------- Phone WhatsApp bar ---------- */
+    .wa-bar{ display:none; }
+
+    /* ---------- Motion ---------- */
+    @media (prefers-reduced-motion: no-preference){
+      @supports (animation-timeline: view()){
+        section{
+          animation:fadeUp 0.5s ease forwards;
+          animation-timeline:view();
+          animation-range:entry 15% cover 30%;
+        }
+      }
+    }
+    @keyframes fadeUp{ from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:none; } }
+
+    /* ---------- Laptop ---------- */
+    @media (max-width:1023px){
+      :root{ --pad:72px; }
+    }
+
+    /* ---------- Tablet: hero stacks ---------- */
+    @media (max-width:900px){
+      .hero-media{ position:static; width:100%; height:auto; }
+      .hero-media img{ height:auto; aspect-ratio:16 / 9; }
+      .hero-inner{ padding-top:56px; }
+      .hero-text{ max-width:100%; }
+      .hero-lead{ max-width:none; }
+      .how-grid, .start-grid{ grid-template-columns:1fr; gap:40px; }
+      .how-media{ order:-1; }
+      .how-media img{ aspect-ratio:16 / 9; }
+      .start-media{ order:-1; }
+    }
+
+    /* ---------- Phone ---------- */
+    @media (max-width:700px){
+      :root{ --pad:56px; }
+      body{ padding-bottom:72px; }
+      .hero-inner{ padding-top:40px; }
+      .hero-media img{ aspect-ratio:4 / 3; }
+      .figures{ grid-template-columns:1fr; gap:36px; }
+      .who{ flex-direction:column; gap:16px; margin-bottom:48px; }
+      .offer-grid{ grid-template-columns:1fr; grid-template-rows:auto; gap:16px; }
+      .tile.tall{ grid-row:auto; }
+      .tile.tall img{ height:220px; aspect-ratio:auto; }
+      .tile.small img{ height:180px; }
+      .step{ flex-direction:column; gap:8px; }
+      .step-num{ font-size:64px; min-width:0; }
+      .contact-actions .btn{ max-width:none; }
+      .footer-grid{ grid-template-columns:1fr; gap:28px; }
+      section{ animation:none !important; }
+
+      .wa-bar{
+        display:flex; align-items:center; justify-content:center; gap:10px;
+        position:fixed; left:0; right:0; bottom:0; height:56px; z-index:60;
+        background:var(--primary); color:var(--white); text-decoration:none;
+        font-family:var(--text); font-weight:700; font-size:var(--btn);
+      }
+      .wa-bar svg{ width:24px; height:24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <img src="images/logo.jpg" width="1024" height="1024" alt="Loan Desk logo: a round badge with a phone handset and a tick, reading Namma Loan Desk.">
+      <span class="brand-name">Loan Desk</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 1. HERO -->
+    <section class="s-hero" id="top">
+      <div class="hero-media">
+        <img src="images/speaking.jpg" width="1376" height="768" fetchpriority="high" alt="A founder in a dark blazer explaining the follow-up board to a colleague at a desk, a laptop showing a rate chart and a diary open on the table.">
+      </div>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <span class="label">Loan Desk &middot; Bengaluru</span>
+          <h1>Fewer lost <span class="accent">loan files</span>. Live in three to five days.</h1>
+          <p class="hero-lead">For small telecalling teams and independent DSA desks chasing home, personal and business loan enquiries every day.</p>
+          <div class="hero-actions">
+            <a class="btn btn-on-primary" href="https://wa.me/919986685355?text=Hi%20Loan%20Desk%2C%20I%20would%20like%20to%20set%20up%20my%20loan%20desk%20tools.">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 9.5c0 3.3 2.7 6 6 6l1.3-1.6 1.9.9-.4 1.6c-3.9.4-9.3-4.6-9.3-8.2l1.5-.5.9 1.8Z"/></svg>
+              Order on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PROOF -->
+    <section class="s-proof">
+      <div class="wrap">
+        <div class="who">
+          <img src="images/profile.jpg" width="1024" height="1536" loading="lazy" alt="Suresh, founder of Loan Desk, in a brown blazer and white shirt.">
+          <div>
+            <h2>Hi, I am Suresh. I built Loan Desk for the desks I kept seeing lose files.</h2>
+            <p>I watched good loan enquiries go quiet on busy desks. Calls land faster than anyone can ring back, notes live in diaries and on personal phones, and the file goes to whichever desk calls first. So I build small, calm tools that keep every enquiry on one clean board and start your morning already current on rates.</p>
+          </div>
+        </div>
+        <div class="figures">
+          <div>
+            <div class="figure-num">3-5</div>
+            <span class="label figure-label">Working days to go live</span>
+          </div>
+          <div>
+            <div class="figure-num">2-20</div>
+            <span class="label figure-label">People per desk</span>
+          </div>
+          <div>
+            <div class="figure-num">8:30 am</div>
+            <span class="label figure-label">The daily rate digest arrives</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. WHAT YOU GET -->
+    <section class="s-light" id="offer">
+      <div class="wrap">
+        <div class="sect-head">
+          <h2>What you get</h2>
+          <p class="sect-lead">Three small tools that talk to each other. Fill the form once and nothing is entered twice.</p>
+        </div>
+        <div class="offer-grid">
+          <article class="tile tall">
+            <img src="images/shot-1.jpg" width="1024" height="1024" loading="lazy" alt="A laptop showing the Loan Desk follow-up board beside a phone showing the rate digest, on a dark teal background.">
+            <div class="tile-body">
+              <span class="tile-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="9.5" y="4" width="5" height="11" rx="1.5"/><rect x="16" y="4" width="5" height="7" rx="1.5"/></svg>
+              </span>
+              <h3>Loan enquiry follow-up board</h3>
+              <p>One screen shows what is at stake, what is due today and what has gone quiet, so nobody waits on a call that is never coming.</p>
+            </div>
+          </article>
+
+          <article class="tile small">
+            <img src="images/shot-5.jpg" width="1024" height="1024" loading="lazy" alt="Interface cards for the enquiry register, the follow-up board and the rate digest laid out around a laptop and a phone.">
+            <div class="tile-body">
+              <span class="tile-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+              </span>
+              <h3>Enquiry form to lead register</h3>
+              <p>Fill the form once and every enquiry becomes a clean row: name, phone, loan type, amount and next call date.</p>
+            </div>
+          </article>
+
+          <article class="tile small">
+            <img src="images/shot-2.jpg" width="1024" height="1024" loading="lazy" alt="A glowing phone showing a call back alert on a glass panel in a dark teal scene.">
+            <div class="tile-body">
+              <span class="tile-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10.5 20a2 2 0 0 0 3 0"/></svg>
+              </span>
+              <h3>Morning rate and scheme digest</h3>
+              <p>A short WhatsApp message each morning with the rate and scheme changes that matter for home, personal and business loans.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HOW IT WORKS -->
+    <section class="s-secondary" id="how">
+      <div class="wrap">
+        <div class="sect-head">
+          <h2>How it works</h2>
+        </div>
+        <div class="how-grid">
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <div>
+                <h3>Tell me about your desk</h3>
+                <p>A 20-minute call to collect your business name, the loan types you handle, your desk number and a Google account.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">02</div>
+              <div>
+                <h3>I build the three tools</h3>
+                <p>The register, the follow-up board and the morning digest, set up on your own Google Sheet and connected to your WhatsApp.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">03</div>
+              <div>
+                <h3>Go live and watch it fill</h3>
+                <p>Three to five working days later your desk is live, and your first enquiry flows in. You watch it land.</p>
+              </div>
+            </div>
+          </div>
+          <div class="how-media">
+            <img src="images/working.jpg" width="1024" height="1024" loading="lazy" alt="A person working at a telecalling desk in morning light, a laptop showing the follow-up board beside a phone showing the rate digest.">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PRICE -->
+    <section class="s-contrast" id="price">
+      <div class="wrap">
+        <div class="sect-head">
+          <h2>One clear price</h2>
+        </div>
+        <p class="price">Rs 25,000 <span>setup</span> + Rs 4,000 <span>a month</span></p>
+        <ul class="included">
+          <li>Setup builds the register, the follow-up board and the morning digest on your own Google Sheet, connected to your WhatsApp.</li>
+          <li>The monthly fee covers hosting, running costs, support, small changes and unlimited enquiry rows. One flat fee, no per-enquiry or per-seat charge.</li>
+          <li>You own the data. It stays in your Google Sheet, and it stays with you if we ever part ways.</li>
+        </ul>
+        <div class="faq">
+          <details>
+            <summary>Will this work for a small team like mine?</summary>
+            <p>Yes. It is built for small desks, from two people to about twenty, and it runs on the WhatsApp and Google Sheet you already use. No IT person needed.</p>
+          </details>
+          <details>
+            <summary>Do I need to buy new software or apps?</summary>
+            <p>No. Everything runs on tools you already know, a Google Sheet and WhatsApp. Your callers learn nothing new except one short form.</p>
+          </details>
+          <details>
+            <summary>How long does setup take?</summary>
+            <p>Three to five working days from the day we have your details. Simple desks go live sooner.</p>
+          </details>
+          <details>
+            <summary>What does the monthly fee cover?</summary>
+            <p>Everything: hosting, running costs, support, small changes and unlimited enquiry rows. One flat fee, with no per-seat or per-enquiry charge.</p>
+          </details>
+          <details>
+            <summary>Can I cancel any time?</summary>
+            <p>Yes. Give 30 days notice and we stop, with no lock-in and no exit fee. Your data stays in your Google Sheet.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. START -->
+    <section class="s-start" id="start">
+      <div class="wrap">
+        <div class="start-grid">
+          <div>
+            <p class="start-line">Start your desk today, and keep every loan enquiry on one clean board.</p>
+            <div class="contact-actions">
+              <a class="btn btn-on-primary" href="https://cal.com/namma-ai/banktelecalling">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+                Book a 20 minute call
+              </a>
+              <a class="btn btn-ghost-light" href="https://wa.me/919986685355?text=Hi%20Loan%20Desk%2C%20I%20would%20like%20to%20set%20up%20my%20loan%20desk%20tools.">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 9.5c0 3.3 2.7 6 6 6l1.3-1.6 1.9.9-.4 1.6c-3.9.4-9.3-4.6-9.3-8.2l1.5-.5.9 1.8Z"/></svg>
+                Message me on WhatsApp
+              </a>
+              <a class="btn btn-ghost-light" href="mailto:nammaai1707@gmail.com?subject=Loan%20Desk%20enquiry">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                Email me
+              </a>
+            </div>
+          </div>
+          <div class="start-media">
+            <img src="images/shot-4.jpg" width="1024" height="1024" loading="lazy" alt="Two colleagues looking at a wall screen showing the Loan Desk follow-up board in an office.">
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 7. FOOTER -->
+  <footer class="s-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="images/logo-dark.jpg" width="1024" height="1024" loading="lazy" alt="Loan Desk logo on a dark background: a round badge with a phone handset and a tick.">
+            <strong>Loan Desk</strong>
+          </div>
+          <p style="margin:0; max-width:44ch;">A clean enquiry register, a follow-up board and a morning rate digest for small telecalling teams and DSA desks.</p>
+          <p class="credit label">Photos: Loan Desk.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://cal.com/namma-ai/banktelecalling">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            Book a 20 minute call
+          </a>
+          <a href="https://wa.me/919986685355?text=Hi%20Loan%20Desk%2C%20I%20would%20like%20to%20set%20up%20my%20loan%20desk%20tools.">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 9.5c0 3.3 2.7 6 6 6l1.3-1.6 1.9.9-.4 1.6c-3.9.4-9.3-4.6-9.3-8.2l1.5-.5.9 1.8Z"/></svg>
+            Message me on WhatsApp
+          </a>
+          <a href="mailto:nammaai1707@gmail.com?subject=Loan%20Desk%20enquiry">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            nammaai1707@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="wa-bar" href="https://wa.me/919986685355?text=Hi%20Loan%20Desk%2C%20I%20would%20like%20to%20set%20up%20my%20loan%20desk%20tools.">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 9.5c0 3.3 2.7 6 6 6l1.3-1.6 1.9.9-.4 1.6c-3.9.4-9.3-4.6-9.3-8.2l1.5-.5.9 1.8Z"/></svg>
+    Message me on WhatsApp
+  </a>
+
+</body>
+</html>
